@@ -80,7 +80,7 @@
   --font-heading: var(--font-display); /* legacy alias */
 
   /* ---- Type scale (unchanged) ---- */
-  --fs-hero: clamp(2.75rem, 2.1rem + 3vw, 4.5rem);
+  --fs-hero: clamp(2.25rem, 1.5rem + 2.3vw, 3.5rem);
   --fs-h2: clamp(2rem, 1.65rem + 1.5vw, 2.75rem);
   --fs-h3: 1.625rem;
   --fs-lede: 1.3125rem;
@@ -573,6 +573,112 @@ a:hover {
 }
 
 @media (max-width: 700px) {
+  /* A single line of "Shara Marie-France" genuinely doesn't fit at
+     readable size once the hero column drops to full mobile width —
+     let it wrap back to two lines here rather than shrinking further. */
+  .hero-name {
+    white-space: normal !important;
+  }
+
+  /* The name's single-line min-content width and the space actually
+     available beside the logo were within about a pixel of each other
+     at mobile widths, so it was tipping into a wrap by a hair. Trim
+     the logo's gap here to reliably keep it on one line. */
+  .hero-name-row {
+    gap: 10px !important;
+  }
+
+  /* --fs-hero's clamp() floor (36px) still leaves "Shara Marie-France"
+     ~45px wider than the space beside the logo at ~375px-and-up mobile
+     widths. Drop the floor further here so it reliably fits on one
+     line through ordinary phone widths; only genuinely narrow widths
+     (~360px and below) still fall back to the two-line wrap above. */
+  :root {
+    --fs-hero: 29px;
+  }
+
+  /* The header's logo + 5-item nav row never had a mobile fallback,
+     so it was forcing horizontal page overflow below ~700px. Let the
+     header wrap to two rows and let the nav itself wrap onto multiple
+     lines with a tighter gap rather than overflowing the viewport. */
+  .site-header {
+    flex-wrap: wrap;
+    row-gap: 12px;
+    padding: 16px 20px !important;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    gap: 12px 20px !important;
+    width: 100%;
+  }
+
+  /* The Alignment Review callout's left panel had a fixed 600px width
+     that never shrank, forcing the whole card (and the page) to
+     overflow horizontally on mobile. Stack the two panels instead. */
+  .review-card {
+    flex-direction: column;
+  }
+
+  .review-card-left {
+    width: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(246, 241, 232, 0.15);
+  }
+
+  /* The Gap section's 4-card grid also lacked a mobile fallback —
+     stack the cards into a single column below 700px. */
+  .gap-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Longer CTA labels ("Learn about the Alignment Review") were forced
+     onto one nowrap line, which no longer fits a narrow column's
+     padded width. Let button text wrap here; short labels are
+     unaffected since they never reach a wrap point. */
+  .btn {
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* The About section's photo/text grid also lacked a mobile fallback —
+     stack the photo above the text below 700px. */
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .about-photo-wrap {
+    padding: 0 24px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-photo-wrap {
+    padding: 0 24px !important;
+  }
+
+  /* A single long word in a large heading (e.g. "organizations",
+     "Organizational–Community") can be wider than a narrow mobile
+     column and force the whole box to overflow, since normal wrapping
+     only breaks between words. Let headings break mid-word as a
+     last resort once they no longer fit. */
+  h1, h2, h3, h4 {
+    overflow-wrap: break-word;
+  }
+
+  /* The hero also never had a mobile stacking rule — its two columns
+     were splitting an already-narrow viewport in two, squeezing the
+     name/subtitle column down to ~1/2 width. Stack photo below text. */
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .hero-grid-left {
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-border);
+    padding: 56px 24px 40px !important;
+  }
+
   .fw-top-grid {
     grid-template-columns: 1fr;
     justify-items: stretch;
