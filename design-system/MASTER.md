@@ -99,10 +99,10 @@ Single shared mechanism, defined in `js/main.js` + the `.reveal`/`.load-in` CSS 
 
 ## 4. Components
 
-- **Buttons** — `.btn` base (inline-flex, sized to content, `white-space:nowrap`) + one modifier:
-  - `.btn-primary` — aubergine fill, parchment text. Default for most CTAs.
-  - `.btn-secondary` — transparent fill, aubergine border + text, pale-aubergine hover fill. Used for lower-emphasis CTAs ("Learn about...", "Learn more about...").
-  - `.btn-accent` — ochre fill, brown-black text. **Reserved** for moments that genuinely deserve attention (flagship offer CTA, final closing CTA) — do not overuse.
+- **Buttons** — `.btn` base (inline-flex, sized to content, `white-space:nowrap`) + one modifier. **Color rule (as of 2026-08-27): ochre/yellow is reserved exclusively for "Work With Me" — every other CTA on the site shares one consistent dark aubergine style.** Concretely:
+  - `.btn-accent` — ochre fill, brown-black text. **Every "Work With Me" button, wherever it appears** (nav, hero, closing CTA), plus the flagship-offer CTA (the original donor instance of this style). Do not apply `.btn-accent` to anything else — it should read as "this is the one action that matters most on the page."
+  - `.btn-primary` — aubergine fill, parchment text. The default for **every other CTA**: "Learn about the Alignment Review," "Learn More about the Gaps," "Learn more about the Framework," "More About Me," and any future secondary/tertiary calls to action.
+  - `.btn-secondary` — transparent fill, aubergine border + text, pale-aubergine hover fill. Still defined in CSS but **not currently used anywhere on `index.html`** after this change — available if a genuinely lower-emphasis, non-`.btn-primary` CTA is needed later, but don't reach for it by default.
 - **Cards** — `.card` (surface bg, 1px aubergine-tinted border, minimal shadow) is the shared surface for every card-like module. Compose with layout-only classes (`.fw-card`, `.fw-row`) rather than duplicating background/border/shadow per instance.
 - **Eyebrow** — `.eyebrow` (ochre-text label + bright-ochre decorative dash) is the default; add `.eyebrow--mono` for systemic sections (see Typography above).
 - **Nav** — `.nav-link` gets an animated blue underline sweep + blue text on hover/`[aria-current="page"]`. `.btn-primary[aria-current="page"]` (the "Work With Me" nav button) darkens instead.
