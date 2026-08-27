@@ -675,6 +675,17 @@ a:hover {
   .fw-connector-merge--mobile {
     display: block;
   }
+
+  /* Calendly's own min-width:320px (needed for its calendar to render
+     "correctly" per Calendly's docs) is wider than the options card can
+     offer once section + card padding is subtracted from a true mobile
+     viewport (~279px card, ~191px of that after card padding) — it was
+     forcing a genuine page-level horizontal overflow. Let it shrink to
+     match the card here; Calendly's own page is still responsive below
+     320px, just a little more cramped, which beats overflowing the page. */
+  .calendly-inline-widget {
+    min-width: 0 !important;
+  }
 }
 
 /* The Alignment Review callout's left panel is a fixed 600px (by design,
@@ -708,6 +719,18 @@ a:hover {
     flex-wrap: wrap;
     gap: 4px 20px !important;
     width: 100%;
+  }
+
+  /* Calendly's inline widget needs a real min-width:320px to render
+     correctly (Calendly's own requirement, not ours) — but the two-card
+     options grid on work-with-me.html only gives each card ~300-400px
+     between 700-1000px wide, so the widget was overflowing its card by
+     ~50px into the card next to it (not a page-level overflow, so a
+     plain scrollWidth check won't catch it — only visual inspection
+     will). Stack to one column through the same gap the other
+     fixed-minimum-width components above needed. */
+  .wwm-options-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 }
 

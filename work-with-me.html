@@ -44,15 +44,14 @@
 
     <!-- Two paths -->
     <section style="background: var(--color-background-tint)">
-      <div class="gap-grid" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 32px; padding: 32px 48px 56px">
+      <div class="wwm-options-grid" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 32px; padding: 32px 48px 56px">
 
         <!-- Option 1: Schedule a Conversation -->
         <div class="card" style="padding: 40px 44px 44px; display: flex; flex-direction: column">
           <div style="font-family: var(--font-mono); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-brand-accent-text); margin-bottom: 16px">Option 1</div>
           <h3 style="font-size: var(--fs-h3); margin: 0 0 14px">Schedule a Conversation</h3>
           <p style="margin: 0 0 28px; font-size: 17px; line-height: 1.55; color: var(--color-text)">A 30-minute conversation to talk through a project, question, invitation, or idea and explore whether there's a useful way to work together.</p>
-          <!-- TODO: embed Calendly or similar booking widget here -->
-          <a href="#" class="btn btn-primary" style="width: fit-content; margin-top: auto">Schedule a Conversation</a>
+          <div class="calendly-inline-widget" data-url="https://calendly.com/shara-sharamariefrance/30min?hide_event_type_details=1" data-resize="true" style="width: 100%; min-width: 320px; height: 700px"></div>
         </div>
 
         <!-- Option 2: Send a Message -->
@@ -90,5 +89,6 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
