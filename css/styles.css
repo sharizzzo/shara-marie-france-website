@@ -559,7 +559,11 @@ a:hover {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 48px;
-  box-sizing: content-box;
+  /* border-box (the site-wide default) — this was content-box, which
+     added the 48px+48px padding OUTSIDE the width:100%, overflowing the
+     viewport by 96px at any width below ~996px (900 + padding) where
+     this connector isn't yet hidden by the mobile breakpoint below. */
+  box-sizing: border-box;
   height: 56px;
 }
 
@@ -597,34 +601,14 @@ a:hover {
     --fs-hero: 29px;
   }
 
-  /* The header's logo + 5-item nav row never had a mobile fallback,
-     so it was forcing horizontal page overflow below ~700px. Let the
-     header wrap to two rows and let the nav itself wrap onto multiple
-     lines with a tighter gap rather than overflowing the viewport. */
-  .site-header {
-    flex-wrap: wrap;
-    row-gap: 12px;
-    padding: 16px 20px !important;
-  }
+  /* Header/nav wrap rules now live in the wider @media (max-width: 1000px)
+     block below — the logo + 5-item nav row doesn't fit on one row
+     anywhere from mobile up through ~900px tablet widths, not just below
+     700px (see there for detail). */
 
-  .site-nav {
-    flex-wrap: wrap;
-    gap: 12px 20px !important;
-    width: 100%;
-  }
-
-  /* The Alignment Review callout's left panel had a fixed 600px width
-     that never shrank, forcing the whole card (and the page) to
-     overflow horizontally on mobile. Stack the two panels instead. */
-  .review-card {
-    flex-direction: column;
-  }
-
-  .review-card-left {
-    width: auto !important;
-    border-right: none !important;
-    border-bottom: 1px solid rgba(246, 241, 232, 0.15);
-  }
+  /* The Alignment Review callout's stacking rule now lives in its own
+     @media (max-width: 1000px) block below, since 700px wasn't wide
+     enough a cutoff for its fixed 600px left panel — see there. */
 
   /* The Gap section's 4-card grid also lacked a mobile fallback —
      stack the cards into a single column below 700px. */
@@ -690,6 +674,52 @@ a:hover {
 
   .fw-connector-merge--mobile {
     display: block;
+  }
+}
+
+/* The Alignment Review callout's left panel is a fixed 600px (by design,
+   at full desktop widths) — but that leaves the right panel too little
+   room anywhere from ~700px up to ~1000px (tablet/small-desktop), where
+   it doesn't yet get the <700px mobile stack below. Give it the same
+   stacked treatment through that whole gap instead of just <700px. */
+@media (max-width: 1000px) {
+  .review-card {
+    flex-direction: column;
+  }
+
+  .review-card-left {
+    width: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(246, 241, 232, 0.15);
+  }
+
+  /* The header's logo + 5-item nav row doesn't fit on one row below
+     ~1000px — without this it doesn't overflow the page (flex items
+     just shrink), but "Shara Marie-France" and "About Me" wrap awkwardly
+     mid-phrase inside their own boxes instead. Wrap the header to two
+     clean rows instead of letting individual items squeeze and wrap. */
+  .site-header {
+    flex-wrap: wrap;
+    row-gap: 12px;
+    padding: 16px 20px !important;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    gap: 4px 20px !important;
+    width: 100%;
+  }
+}
+
+/* Nav links are plain 13px text with no padding — a ~15px-tall tap
+   target, well under the ~44px minimum recommended for touch. Tablet
+   widths (and the phones above) are the ones actually operated by touch
+   in practice, so pad the target out through 1024px; true desktop keeps
+   the tighter, deliberately minimal nav spacing above that. */
+@media (max-width: 1024px) {
+  .nav-link {
+    display: inline-block;
+    padding: 14px 0;
   }
 }
 
