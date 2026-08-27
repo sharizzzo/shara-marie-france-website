@@ -1,0 +1,645 @@
+/* ==========================================================================
+   Design system v5 — Shara Marie-France, Organizational Advisor
+   Same brand palette as v4 (aubergine/ochre/blue/parchment/brown-black) and
+   the same motion/reveal mechanics. Typography re-run to a four-role
+   editorial system — Public Sans Bold (ideas/problems/diagnoses), Public
+   Sans Regular/Medium (explanation/navigation/UI), Source Serif 4 Italic
+   (human experience/questions/reflection), IBM Plex Mono (systems/
+   processes/frameworks) — used selectively, not uniformly across headings.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand source hexes (semantic tokens, per brand guide) ---- */
+  --color-brand-primary: #392A42;         /* Aubergine — identity, structure, authority */
+  --color-brand-primary-hover: #2C2033;   /* darker aubergine — hover/press */
+  --color-brand-primary-tint: #EFEAF0;    /* pale aubergine wash — subtle fills, secondary-btn hover */
+
+  --color-brand-accent: #D5A437;          /* Ochre — insight/emphasis; fills, borders, decorative marks */
+  --color-brand-accent-hover: #BE9130;    /* ochre hover */
+  --color-brand-accent-text: #8A651F;     /* darkened ochre — the ONLY ochre safe as small text on parchment (verified 4.5:1+) */
+
+  --color-brand-secondary: #4976A8;       /* Clear Blue — informational, diagrams, secondary UI */
+  --color-brand-secondary-hover: #3B5F89; /* blue hover */
+  --color-brand-secondary-text: #3D6690;  /* darkened blue — safe as link/small-text color on parchment (verified 5:1+) */
+  --color-brand-secondary-on-dark: #8FB2D4; /* lightened blue — the only blue safe on aubergine bg (verified 5.9:1) */
+
+  --color-background: #F6F1E8;            /* Parchment — default page background */
+  --color-background-tint: #EFE8DD;       /* subtle aubergine-leaning tint — occasional alt-section bg */
+  --color-background-tint-cool: #E9EEF2;  /* subtle blue-leaning tint — reserved for future use */
+
+  --color-text: #302C2A;                  /* Deep Brown-Black — body copy, dark neutral */
+  --color-text-muted: color-mix(in srgb, var(--color-text) 68%, transparent);
+
+  --color-surface: #FBF8F2;               /* card surface — a hair lighter than parchment */
+  --color-surface-dark: var(--color-brand-primary);
+  --color-text-on-dark: var(--color-background);
+
+  --color-highlight: var(--color-brand-accent);   /* alias per brand-guide naming */
+  --color-info: var(--color-brand-secondary);     /* alias per brand-guide naming */
+
+  --color-border: color-mix(in srgb, var(--color-brand-primary) 22%, transparent);
+  --color-border-strong: color-mix(in srgb, var(--color-brand-primary) 38%, transparent);
+
+  /* Keyboard focus ring — aubergine reads on parchment; .on-dark sections
+     (aubergine backgrounds) flip this to parchment so it stays visible. */
+  --focus-ring: var(--color-brand-primary);
+
+  /* ---- Legacy aliases — old inline var() references now resolve to the
+     token that matches their ORIGINAL FUNCTIONAL ROLE, not their old hue.
+     (e.g. --color-violet was used for links/labels → now blue-text, the
+     brief's designated link/label color; --color-vermilion was used for
+     small decorative marks → now ochre, the designated accent-mark color.) ---- */
+  --color-ink: var(--color-text);
+  --color-paper: var(--color-background);
+  --color-tint: var(--color-background-tint);
+  --color-card: var(--color-surface);
+  --color-bg: var(--color-background-tint);
+  --color-cream: var(--color-background);
+  --color-purple: var(--color-brand-secondary-text);
+  --color-deep-purple: var(--color-brand-secondary-hover);
+  --color-violet: var(--color-brand-secondary-text);
+  --color-accent: var(--color-brand-primary);
+  --color-accent-600: var(--color-brand-primary-hover);
+  --color-accent-700: var(--color-brand-primary-hover);
+  --color-vermilion: var(--color-brand-accent);
+  --color-coral: var(--color-brand-primary);
+  --color-coral-dark: var(--color-brand-primary-hover);
+  --color-divider: var(--color-border);
+  --color-divider-strong: var(--color-border-strong);
+
+  /* ---- Type ----
+     Four-role editorial system:
+     --font-display   : Public Sans Bold — ideas, problems, diagnoses (major headings/statements)
+     --font-body      : Public Sans Regular/Medium — explanation, navigation, buttons, UI
+     --font-editorial : Source Serif 4 Italic — human experience, questions, reflection, quotes
+     --font-mono      : IBM Plex Mono — systems, processes, frameworks, annotations           */
+  --font-display: 'Public Sans', system-ui, sans-serif;
+  --font-body: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-editorial: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-heading: var(--font-display); /* legacy alias */
+
+  /* ---- Type scale (unchanged) ---- */
+  --fs-hero: clamp(2.75rem, 2.1rem + 3vw, 4.5rem);
+  --fs-h2: clamp(2rem, 1.65rem + 1.5vw, 2.75rem);
+  --fs-h3: 1.625rem;
+  --fs-lede: 1.3125rem;
+  --fs-body: 1.0625rem;
+  --fs-label: 0.8125rem;
+
+  --content-max: 1120px;
+
+  /* ---- Framework diagram accents ----
+     Sampled directly from the client-provided reference image (five icon-
+     circle colors). Scoped to the Framework diagram only — layered on top
+     of the brand palette above, not a replacement of it. ---- */
+  --diagram-rose: #BF827B;
+  --diagram-blue: #5474A1;
+  --diagram-ochre: #CB8E29;
+  --diagram-aubergine: #362141;
+  --diagram-olive: #747967;
+
+  /* ---- Motion (unchanged) ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
+  --duration-base: 350ms;
+  --duration-slow: 600ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Aubergine carries "major headings" per brand guide. Headings placed on
+   an aubergine background override this locally (inline color: parchment).
+   Public Sans Bold is the DEFAULT heading voice (ideas/problems/diagnoses);
+   specific headings that read as a question, a quotation, or a human
+   reflection instead use .editorial (Source Serif 4 Italic) — see below. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--color-brand-primary);
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+/* Editorial emphasis: Source Serif 4 Italic, for questions, quotations,
+   human observations, and selectively-emphasized phrases — never used for
+   whole blocks of body copy, and never as the default heading voice. */
+.editorial {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+h1.editorial, h2.editorial, h3.editorial, h4.editorial {
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+/* System/process voice: IBM Plex Mono, for framework steps, diagram
+   annotations, and numbered system markers — small, technical, distinct
+   from the editorial and heading voices. */
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* Eyebrow: ochre is the brand's designated "small eyebrow text" color, but
+   true ochre fails AA contrast on parchment (~2:1) — so the label uses the
+   darkened, text-safe ochre variant, while the decorative dash uses the
+   true bright ochre (a purely ornamental mark, not conveying information). */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand-accent-text);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  background: var(--color-brand-accent);
+  display: inline-block;
+}
+
+/* Eyebrows introducing a systemic/process section (The Gap, How I Help,
+   Framework) switch to the mono system-voice instead of Public Sans —
+   applied selectively, not to every eyebrow on the page. */
+.eyebrow--mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* Links: blue is the brand's designated link color (text-safe variant for
+   AA on parchment). Hover adds both a color shift AND an ochre underline —
+   never color alone — per the brand guide's hover requirement. */
+a {
+  color: var(--color-brand-secondary-text);
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-out),
+              text-decoration-color var(--duration-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-brand-primary);
+  text-decoration-color: var(--color-brand-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Applied to sections/cards with an aubergine background, so focus rings
+   (and anything else keyed off --focus-ring) stay visible on dark surfaces. */
+.on-dark {
+  --focus-ring: var(--color-background);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand-accent) 40%, transparent);
+}
+
+/* ---- Buttons ----
+   Three roles per the brand guide: primary (aubergine fill), secondary
+   (aubergine outline), accent (ochre fill, reserved for moments that
+   genuinely deserve attention). Shared .btn base sizes to content and
+   carries the considered hover/press interaction. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transform: translateY(0);
+  box-shadow: 0 0 0 rgba(48, 44, 42, 0);
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(48, 44, 42, 0.14);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(48, 44, 42, 0.12);
+}
+
+.btn-primary {
+  background: var(--color-brand-primary);
+  color: var(--color-background);
+}
+
+.btn-primary:hover {
+  background: var(--color-brand-primary-hover);
+  box-shadow: 0 8px 20px rgba(48, 44, 42, 0.14), inset 0 -3px 0 var(--color-brand-accent);
+}
+
+.btn-primary:active {
+  background: var(--color-brand-primary-hover);
+}
+
+.btn-primary[aria-current="page"] {
+  background: var(--color-brand-primary-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--color-brand-primary-tint);
+}
+
+.btn-accent {
+  background: var(--color-brand-accent);
+  color: var(--color-text);
+}
+
+.btn-accent:hover {
+  background: var(--color-brand-accent-hover);
+}
+
+/* ---- Site nav active state ---- */
+.nav-link {
+  position: relative;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 2px;
+  background: var(--color-brand-secondary);
+  transition: right var(--duration-base) var(--ease-out);
+}
+
+.nav-link:hover,
+.nav-link[aria-current="page"] {
+  color: var(--color-brand-secondary-text) !important;
+  font-weight: 600;
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  right: 0;
+}
+
+/* ---- Card ----
+   Restrained per the brand guide: parchment-adjacent surface, a subtle
+   aubergine-tinted border rather than a heavy shadow, minimal lift on
+   hover — not a "floating SaaS card." */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 2px rgba(48, 44, 42, 0.05);
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 6px 16px rgba(48, 44, 42, 0.08);
+}
+
+.card-accent-bar {
+  width: 24px;
+  height: 3px;
+  background: var(--color-brand-accent);
+  transition: width var(--duration-base) var(--ease-out);
+}
+
+.card:hover .card-accent-bar {
+  width: 44px;
+}
+
+/* ---- Scroll reveal (generalized, unchanged) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-group > * {
+  transition-delay: calc(var(--reveal-index, 0) * 90ms);
+}
+
+/* ---- "How I Help" gap-diagram: two paths drawing in to converge
+   (unchanged mechanics — colors reassigned per the visual-motif rule:
+   aubergine for structure, blue for information/pathways, ochre for the
+   point of insight/resolution) ---- */
+.gap-diagram-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 1100ms var(--ease-out);
+}
+
+.gap-diagram.is-visible .gap-diagram-path {
+  stroke-dashoffset: 0;
+}
+
+.gap-diagram-node {
+  opacity: 0;
+  transform: scale(0.6);
+  transform-origin: center;
+  transition: opacity var(--duration-base) var(--ease-out) 900ms,
+              transform var(--duration-base) var(--ease-out) 900ms;
+}
+
+.gap-diagram.is-visible .gap-diagram-node {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gap-diagram-path {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+
+  .gap-diagram-node {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---- Hero load-in (unchanged) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .load-in {
+    opacity: 0;
+    animation: load-in-up var(--duration-slow) var(--ease-out) forwards;
+    animation-delay: calc(var(--load-index, 0) * 110ms + 80ms);
+  }
+
+  @keyframes load-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .card,
+  .btn {
+    transition: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .btn:hover,
+  .btn:active {
+    transform: none;
+  }
+}
+
+/* ---- Framework diagram (reference-matched layout) ----
+   Two intention/experience cards converging into a sequential Gap →
+   Intervention → Outcome stack. Reuses .card for surface/border/shadow;
+   these classes only handle the icon + title + question internal layout. */
+.fw-top-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.fw-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 28px;
+}
+
+.fw-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 22px 28px;
+}
+
+.fw-card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.fw-card-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.fw-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.fw-card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.fw-row-number {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-right: 6px;
+  color: var(--color-text-muted);
+}
+
+.fw-card-question {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.fw-plus {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1;
+  flex: 0 0 auto;
+  background: var(--color-background);
+}
+
+.fw-connector-merge {
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px;
+  box-sizing: content-box;
+  height: 56px;
+}
+
+.fw-connector-dash {
+  display: flex;
+  justify-content: center;
+}
+
+.fw-connector-merge--mobile {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .fw-top-grid {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+
+  .fw-connector-merge--desktop {
+    display: none;
+  }
+
+  .fw-connector-merge--mobile {
+    display: block;
+  }
+}
+
+/* ---- "How I Work" iceberg + 3-step layout ----
+   Reuses .card/.fw-row/.fw-card-icon/.fw-card-title/.fw-card-question/
+   .fw-connector-dash from the Framework diagram for the right-hand steps. */
+.how-i-work-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 48px 56px;
+}
+
+.iceberg-panel {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.iceberg-labels {
+  flex: 0 0 auto;
+  width: 42%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.iceberg-figure {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.iceberg-label-marker {
+  display: inline-block;
+  width: 16px;
+  height: 0;
+  border-top: 2px dotted currentColor;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.how-i-work-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 700px) {
+  .how-i-work-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

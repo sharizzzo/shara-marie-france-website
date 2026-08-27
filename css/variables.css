@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Design tokens — Shara Marie-France consulting site
+   Define every color, font, and spacing value here. Nothing else in the
+   stylesheets should hardcode a hex value or px font-size.
+   ========================================================================== */
+
+:root {
+  /* ---- Color ---- */
+  --color-primary: #493D7C;       /* deep purple — headings, nav, primary CTAs */
+  --color-primary-dark: #362d5c;  /* hover/active state for primary */
+  --color-secondary: #327C83;     /* teal — secondary CTAs, links, section accents */
+  --color-secondary-dark: #275f65;
+  --color-accent: #63A88B;        /* green — small highlights, tags, hover states ONLY */
+  --color-pink: #F0B6D3;          /* soft pink — iridescent wash only, never solid UI */
+  --color-text: #202124;          /* near-black body text */
+  --color-text-muted: #55585c;    /* secondary/supporting text */
+  --color-bg: #FAF9F7;            /* warm off-white page background */
+  --color-surface: #EEECE8;       /* soft neutral — cards, dividers, alt sections */
+  --color-border: #ddd9d2;
+
+  /* Iridescent wash — hero/CTA sections only, kept special by scarcity */
+  --gradient-wash: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 55%, var(--color-pink) 100%);
+
+  /* ---- Type ----
+     --font-hero    : hero / large display headlines only
+     --font-heading : header logotype + section headings (H1–H4)
+     --font-body    : body copy and interface text                     */
+  --font-hero: 'Archivo Black', sans-serif;
+  --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Work Sans', 'Segoe UI', Arial, sans-serif;
+
+  --tracking-display: 0.02em;   /* hero poster-headline letter-spacing */
+  --tracking-caption: 0.12em;   /* eyebrow/label letter-spacing */
+
+  --fs-xs: 0.8125rem;   /* 13px */
+  --fs-sm: 1rem;        /* 16px */
+  --fs-base: 1.125rem;  /* 18px — preferred body size */
+  --fs-md: 1.25rem;     /* 20px */
+  --fs-lg: 1.875rem;    /* 30px */
+  --fs-xl: 3rem;        /* 48px */
+  --fs-2xl: 4.25rem;    /* 68px — poster-scale hero display */
+
+  --lh-tight: 1.2;
+  --lh-display: 1.02;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.7;
+
+  /* ---- Spacing (generous whitespace is a design requirement) ---- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+
+  /* ---- Layout ---- */
+  --content-max: 1120px;
+  --content-narrow: 760px;
+  --radius-sm: 10px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-blob: 42% 58% 61% 39% / 45% 40% 60% 55%;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms var(--ease);
+  --transition-base: 250ms var(--ease);
+}
