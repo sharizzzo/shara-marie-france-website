@@ -700,7 +700,7 @@ a:hover {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 56px;
-  align-items: start;
+  align-items: stretch;
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 48px 56px;
@@ -715,18 +715,39 @@ a:hover {
 .iceberg-labels {
   flex: 0 0 auto;
   width: 42%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 24px;
+  position: relative;
+}
+
+/* Each label is centered against its own zone of the iceberg graphic
+   (tip vs. submerged mass), not stacked in a column — see the SVG's
+   fractional geometry below (tip spans 0%-29.7%, submerged mass spans
+   29.7%-95% of the row). Percentages here are the vertical center of
+   each zone. */
+.iceberg-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.iceberg-label--above {
+  top: 15%;
+  transform: translateY(-50%);
+}
+
+.iceberg-label--below {
+  top: 62%;
+  transform: translateY(-50%);
 }
 
 .iceberg-figure {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   min-width: 0;
+}
+
+.iceberg-figure svg {
+  position: absolute;
+  inset: 0;
 }
 
 .iceberg-label-marker {
@@ -744,6 +765,24 @@ a:hover {
 }
 
 @media (max-width: 700px) {
+  /* The desktop pairing positions each label absolutely against its own
+     zone of the iceberg (so it depends on the panel's height being set
+     externally). At mobile the panel sits alone in its grid row with
+     nothing to stretch it to, so fall back to normal stacked flow —
+     matches the "natural stacked spacing is fine on mobile" call made
+     earlier for this section. */
+  .iceberg-labels {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .iceberg-label {
+    position: static;
+    transform: none;
+  }
+
   .how-i-work-grid {
     grid-template-columns: 1fr;
     gap: 40px;
