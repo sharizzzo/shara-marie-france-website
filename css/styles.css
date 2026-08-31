@@ -83,7 +83,13 @@
   --fs-hero: clamp(2.25rem, 1.5rem + 2.3vw, 3.5rem);
   --fs-h2: clamp(2rem, 1.65rem + 1.5vw, 2.75rem);
   --fs-h3: 1.625rem;
-  --fs-lede: 1.3125rem;
+  /* Fluid so the hero's "Turning community insight..." line stays on
+     one line through the desktop/tablet range instead of wrapping —
+     floors at 1rem (16px) once the two-column hero genuinely can't fit
+     it any smaller without going illegible, at which point it's left
+     to wrap rather than shrink further. Calibrated against the hero
+     column's real measured width, not guessed. */
+  --fs-lede: clamp(1.0625rem, -0.344rem + 2.5vw, 1.3125rem);
   --fs-body: 1.0625rem;
   --fs-label: 0.8125rem;
 
@@ -590,6 +596,8 @@ a:hover {
      the logo's gap here to reliably keep it on one line. */
   .hero-name-row {
     gap: 10px !important;
+    order: 1;
+    padding: 56px 24px 0;
   }
 
   /* --fs-hero's clamp() floor (36px) still leaves "Shara Marie-France"
@@ -635,10 +643,76 @@ a:hover {
     padding: 0 24px !important;
     border-right: none !important;
     border-bottom: 1px solid var(--color-border);
+    order: 3;
+    margin-bottom: 24px;
+  }
+
+  /* The About photo needs to sit between the heading and the paragraph
+     at mobile widths, not above the whole text block — same
+     display:contents + order technique as the hero above. The
+     reveal/data-reveal scroll-fade moves from the wrapper (a `contents`
+     box has nothing to animate) onto each child individually instead
+     of firing once for the whole block. */
+  .about-text {
+    display: contents;
+  }
+
+  .about-eyebrow {
+    order: 1;
+    padding: 56px 24px 0;
+  }
+
+  .about-heading {
+    order: 2;
+    padding: 0 24px;
+  }
+
+  .about-body {
+    order: 4;
+    padding: 0 24px;
+  }
+
+  .about-cta {
+    order: 5;
+    margin-left: 24px;
+    margin-bottom: 40px;
   }
 
   .hero-photo-wrap {
     padding: 0 24px !important;
+    order: 2;
+    margin-bottom: 24px;
+  }
+
+  /* The hero photo needs to sit between the name/subtitle and the
+     headline at mobile widths, not after the whole text block —
+     display: contents on the wrapper "promotes" its children to be
+     direct grid items of .hero-grid alongside the photo, so `order`
+     can interleave them. The wrapper's own padding/border move onto
+     the first/last items since a `contents` box has no box of its own
+     to carry them. */
+  .hero-grid-left {
+    display: contents;
+  }
+
+  .hero-headline {
+    order: 3;
+    padding: 0 24px;
+  }
+
+  .hero-description {
+    order: 4;
+    padding: 0 24px;
+  }
+
+  .hero-actions {
+    order: 5;
+    padding: 0 24px 40px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-wave {
+    order: 6;
   }
 
   /* A single long word in a large heading (e.g. "organizations",
@@ -655,12 +729,6 @@ a:hover {
      name/subtitle column down to ~1/2 width. Stack photo below text. */
   .hero-grid {
     grid-template-columns: minmax(0, 1fr) !important;
-  }
-
-  .hero-grid-left {
-    border-right: none !important;
-    border-bottom: 1px solid var(--color-border);
-    padding: 56px 24px 40px !important;
   }
 
   .fw-top-grid {
