@@ -678,6 +678,13 @@ a:hover {
     margin-bottom: 40px;
   }
 
+  /* On pages where the About block has no "More About Me" button after
+     the paragraph (about.html), the paragraph is the last item and needs
+     the bottom spacing the button's margin used to provide. */
+  .about-body:last-child {
+    padding-bottom: 40px;
+  }
+
   .hero-photo-wrap {
     padding: 0 24px !important;
     order: 2;
