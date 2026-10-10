@@ -888,6 +888,103 @@ a:hover {
   color: var(--color-background);
 }
 
+/* Soft out-of-focus light in the two dark bands: three big radial glows
+   (gold, light lilac = the pale aubergine tint, clear blue) on a layer
+   behind the content. Peak opacity is 22-28 percent. They sit off to the
+   sides and low, away from the tagline, so the ochre tagline keeps at least
+   4.5:1; the parchment text has far more headroom. The layer is oversized
+   (inset -60px) so it never shows an edge while it drifts. Pure decoration:
+   a pseudo-element, no markup. */
+.home-section--dark {
+  --glow-r: clamp(260px, 34vw, 500px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.home-section--dark::before {
+  content: '';
+  position: absolute;
+  inset: -60px;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--home-glows);
+}
+
+.home-section--hook {
+  --home-glows:
+    radial-gradient(circle var(--glow-r) at 8% 64%,
+      color-mix(in srgb, var(--color-brand-accent) 26%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-accent) 13%, transparent) 30%,
+      transparent 72%),
+    radial-gradient(circle var(--glow-r) at 90% 12%,
+      color-mix(in srgb, var(--color-brand-secondary) 28%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-secondary) 14%, transparent) 30%,
+      transparent 72%),
+    radial-gradient(circle var(--glow-r) at 82% 86%,
+      color-mix(in srgb, var(--color-brand-primary-tint) 22%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-primary-tint) 11%, transparent) 30%,
+      transparent 72%);
+}
+
+.home-section--cta {
+  --home-glows:
+    radial-gradient(circle var(--glow-r) at 6% 22%,
+      color-mix(in srgb, var(--color-brand-accent) 26%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-accent) 13%, transparent) 30%,
+      transparent 72%),
+    radial-gradient(circle var(--glow-r) at 94% 30%,
+      color-mix(in srgb, var(--color-brand-primary-tint) 20%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-primary-tint) 10%, transparent) 30%,
+      transparent 72%),
+    radial-gradient(circle var(--glow-r) at 70% 100%,
+      color-mix(in srgb, var(--color-brand-secondary) 26%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-secondary) 13%, transparent) 30%,
+      transparent 72%);
+}
+
+/* Very slow drift (small movement, long loop); the two bands run out of
+   step. Not applied at all when the visitor prefers reduced motion: the
+   glows then simply stay put. */
+@media (prefers-reduced-motion: no-preference) {
+  .home-section--dark::before {
+    animation: home-glow-drift 52s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .home-section--cta::before {
+    animation-duration: 44s;
+    animation-delay: -17s;
+  }
+
+  @keyframes home-glow-drift {
+    from {
+      transform: translate3d(-36px, -22px, 0) scale(1);
+    }
+    to {
+      transform: translate3d(36px, 22px, 0) scale(1.06);
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .home-section--hook {
+    --home-glows:
+      radial-gradient(circle var(--glow-r) at 0% 58%,
+      color-mix(in srgb, var(--color-brand-accent) 26%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-accent) 13%, transparent) 30%,
+      transparent 72%),
+      radial-gradient(circle var(--glow-r) at 100% 40%,
+      color-mix(in srgb, var(--color-brand-secondary) 28%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-secondary) 14%, transparent) 30%,
+      transparent 72%),
+      radial-gradient(circle var(--glow-r) at 70% 96%,
+      color-mix(in srgb, var(--color-brand-primary-tint) 22%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-primary-tint) 11%, transparent) 30%,
+      transparent 72%);
+  }
+}
+
 /* Eyebrow label and links need the on-dark variants: the usual darkened
    ochre / link blue fail contrast on aubergine. */
 .home-section--dark .eyebrow {
@@ -1030,6 +1127,11 @@ a:hover {
   margin: 0 0 20px;
 }
 
+/* Short gold bar above each bold subheading (shared rule above), centered. */
+.home-block-title::before {
+  margin: 0 auto 16px;
+}
+
 .home-block .home-body {
   max-width: none;
 }
@@ -1092,11 +1194,25 @@ a:hover {
   }
 }
 
+/* Each of the three paragraphs is introduced by a short gold bar (40 x 3px,
+   like the card accent bar) instead of a thin rule. Decorative only: an
+   empty-content pseudo-element, so it is not in the accessibility tree. */
 .problem-item {
   max-width: none;
-  margin: 0 0 clamp(24px, 3vw, 32px);
-  padding-top: clamp(24px, 3vw, 32px);
-  border-top: 1px solid var(--color-border-strong);
+  margin: 0 0 clamp(36px, 4vw, 48px);
+}
+
+.problem-item::before,
+.home-block-title::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--color-brand-accent);
+}
+
+.problem-item::before {
+  margin-bottom: 18px;
 }
 
 /* The only place the Problem section's bold phrases are defined — delete
