@@ -667,6 +667,22 @@ a:hover {
     padding: 0 24px;
   }
 
+  /* about.html has no eyebrow above the heading (the page h1 already
+     says "About Me"), so the heading is the first item and carries a
+     little top spacing itself. */
+  .about-heading:first-child {
+    padding-top: 24px;
+  }
+
+  /* The About block uses a 24px mobile inset (the other pages' sections
+     keep 48px), so about.html's page title matches it and sits closer
+     to the heading below. */
+  .page-header--inset-24 {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    padding-bottom: 8px !important;
+  }
+
   .about-body {
     order: 4;
     padding: 0 24px;
