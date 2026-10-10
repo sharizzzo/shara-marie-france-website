@@ -1042,3 +1042,52 @@ a:hover {
     flex-direction: column;
   }
 }
+
+/* ==========================================================================
+   Homepage frame (index.html only, <body class="home-page">).
+   At 1100px and wider the whole page (header, main, CTA, footer) sits in a
+   rounded, shadowed card over a soft abstract light backdrop. Below 1100px
+   the card is just a full-width wrapper: no margin, radius, shadow or
+   backdrop, so tablets and phones look exactly as before.
+   ========================================================================== */
+
+/* THE BACKDROP LIVES HERE, in this one variable. Swap it for a photo with
+   e.g.  --page-backdrop: url("images/backdrop.jpg") center / cover no-repeat;
+   Palette colors only: the pale aubergine tint as the base, with large,
+   soft radial glows (out-of-focus window light) in ochre, aubergine and a
+   touch of clear blue. Static, no animation. */
+.home-page {
+  --page-backdrop:
+    radial-gradient(ellipse 55% 60% at 8% 6%, color-mix(in srgb, var(--color-brand-accent) 32%, transparent), transparent 72%),
+    radial-gradient(ellipse 50% 55% at 92% 14%, color-mix(in srgb, var(--color-brand-primary) 24%, transparent), transparent 72%),
+    radial-gradient(ellipse 45% 50% at 78% 62%, color-mix(in srgb, var(--color-brand-secondary) 26%, transparent), transparent 72%),
+    radial-gradient(ellipse 55% 55% at 12% 78%, color-mix(in srgb, var(--color-brand-primary) 22%, transparent), transparent 72%),
+    radial-gradient(ellipse 50% 45% at 62% 100%, color-mix(in srgb, var(--color-brand-accent) 28%, transparent), transparent 72%),
+    var(--color-brand-primary-tint);
+}
+
+.page-frame {
+  background: var(--color-background);
+}
+
+@media (min-width: 1100px) {
+  .home-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--page-backdrop);
+  }
+
+  .page-frame {
+    width: min(1200px, calc(100% - 48px));
+    margin: 32px auto;
+    border-radius: 24px;
+    box-shadow:
+      0 2px 6px color-mix(in srgb, var(--color-brand-primary) 10%, transparent),
+      0 28px 80px color-mix(in srgb, var(--color-brand-primary) 24%, transparent);
+    /* clip, not hidden: rounds the corners without making the card a scroll
+       container, so a sticky header inside it would keep working. */
+    overflow: clip;
+  }
+}
