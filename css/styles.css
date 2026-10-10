@@ -822,49 +822,112 @@ a:hover {
 }
 
 /* ==========================================================================
-   Homepage (rebuilt): The Hook / The Problem / This is Where I Come In.
-   Section padding is one shared fluid value; the wavy dividers carry most of
-   the visual separation, so sections that sit right after one use a shorter
-   top padding instead of stacking the full value on top of the wave.
+   Homepage (index.html only): four full-width bands with hard straight
+   edges, everything centered in one container.
+     Hook (aubergine) / The Problem (parchment) / This is Where I Come In
+     (tint) / closing CTA (aubergine). The two dark bands bookend the page.
+   Every band uses the same vertical padding top and bottom (no wavy
+   dividers to make room for) and the same side padding (--home-px).
    ========================================================================== */
 .home-section {
-  --home-pad: clamp(64px, 9vw, 112px);
+  --home-pad: clamp(72px, 10vw, 128px);
   --home-body: clamp(1.125rem, 1.07rem + 0.25vw, 1.25rem);
   --home-px: 48px;
   padding: var(--home-pad) var(--home-px);
 }
 
-/* Sections that end in a wavy divider let the wave sit flush on the
-   section's bottom edge (the divider markup cancels the bottom padding). */
-.home-section--hook {
-  padding-bottom: 0;
+.home-section--hook,
+.home-section--cta {
+  background: var(--color-brand-primary);
 }
 
-.home-section--problem,
+.home-section--problem {
+  background: var(--color-background);
+}
+
 .home-section--role {
-  padding-top: clamp(40px, 5vw, 64px);
+  background: var(--color-background-tint);
 }
 
+/* The one shared container: centered, 1120px max. Whatever is last inside
+   it loses its bottom margin so top and bottom band padding stay equal. */
+.home-container {
+  max-width: 1120px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.home-container > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Dark bands (.on-dark also sets the parchment focus ring) ---- */
+.home-section--dark {
+  color: var(--color-background);
+}
+
+.home-section--dark h1,
+.home-section--dark h2,
+.home-section--dark .home-body {
+  color: var(--color-background);
+}
+
+/* Eyebrow label and links need the on-dark variants: the usual darkened
+   ochre / link blue fail contrast on aubergine. */
+.home-section--dark .eyebrow {
+  color: var(--color-brand-accent);
+}
+
+.home-section--dark a:not(.btn) {
+  color: var(--color-brand-secondary-on-dark);
+}
+
+/* The aubergine-filled secondary button would vanish on an aubergine band:
+   flip it to a parchment outline. "Work With Me" (.btn-accent) is ochre on
+   any background and is left alone. */
+.home-section--dark .btn-primary {
+  background: transparent;
+  color: var(--color-background);
+  border-color: var(--color-background);
+}
+
+.home-section--dark .btn-primary:hover,
+.home-section--dark .btn-primary:active {
+  background: color-mix(in srgb, var(--color-background) 14%, transparent);
+  box-shadow: none;
+}
+
+/* ---- Type ---- */
 .home-hook-title {
   font-size: clamp(2.25rem, 5vw, 3.75rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
   max-width: 900px;
-  margin: 0 0 clamp(20px, 2.5vw, 28px);
+  margin: 0 auto clamp(20px, 2.5vw, 28px);
+  text-wrap: balance;
 }
 
+/* Body text keeps a readable measure, centered with auto margins. It stays
+   left-aligned inside that column: anything longer than three lines reads
+   badly centered. .home-body--center is for one-liners only. */
 .home-body {
   font-size: var(--home-body);
   line-height: 1.6;
   max-width: 44rem;
-  margin: 0 0 1.25em;
+  margin: 0 auto 1.25em;
+  text-align: left;
   color: var(--color-text);
+}
+
+.home-body--center {
+  text-align: center;
 }
 
 .home-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   margin-top: 32px;
 }
@@ -873,27 +936,29 @@ a:hover {
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.12;
   letter-spacing: -0.015em;
-  margin: 0 0 clamp(32px, 4vw, 48px);
+  margin: 0 auto clamp(32px, 4vw, 48px);
+  text-wrap: balance;
 }
 
+/* ---- This is Where I Come In: two blocks, stacked below 900px ---- */
 .home-split {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 56px;
-  max-width: 1120px;
 }
 
 @media (min-width: 900px) {
   .home-split {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(40px, 6vw, 80px);
+    align-items: start;
   }
 }
 
 .home-block {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .home-block-title {
@@ -901,6 +966,8 @@ a:hover {
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
   margin: 0 0 20px;
 }
 
@@ -908,58 +975,45 @@ a:hover {
   max-width: none;
 }
 
-/* Last paragraph of a block leaves room above its button; margin-top:auto on
-   the button pins it to the bottom of the (equal-height) column. */
 .home-block .home-body:last-of-type {
-  margin-bottom: 28px;
+  margin-bottom: 0;
 }
 
+/* Each button sits 24px under its own text (not pinned to the bottom). */
 .home-block .btn {
-  margin-top: auto;
+  align-self: center;
+  margin-top: 24px;
 }
 
-@media (max-width: 700px) {
-  .home-section {
-    --home-px: 24px;
-  }
-
-  .home-actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+/* ---- The Problem: eyebrow, pull statement, ruled paragraphs, button ---- */
+.problem-lead {
+  margin-bottom: clamp(40px, 5vw, 64px);
 }
 
-/* ---- The Problem section (homepage) ----
-   Stacked by default: eyebrow, pull statement, paragraphs, button.
-   Two columns (~40% / ~60%) from 900px up. */
-.problem-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 32px;
-}
-
-@media (min-width: 900px) {
-  .problem-grid {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    gap: clamp(40px, 6vw, 96px);
-    align-items: start;
-  }
-}
-
+/* Pull statement: the editorial italic serif (class="editorial" in the
+   markup supplies family/style/weight). It is centered only where it fits
+   in three lines or fewer (wide screens); below that it is left-aligned
+   like the rest of the long text. */
 .problem-pull {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.5rem, 1rem + 1.6vw, 1.875rem);
+  line-height: 1.35;
   color: var(--color-brand-primary);
-  margin: 0;
+  max-width: 1120px;
+  margin: 0 auto;
+  text-align: left;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .problem-pull {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    text-align: center;
   }
+}
+
+/* The other three paragraphs: one narrow centered column, thin rules
+   between them. */
+.problem-body {
+  max-width: 40rem;
+  margin-inline: auto;
 }
 
 .problem-item {
@@ -973,4 +1027,23 @@ a:hover {
    this rule (or the .problem-bold spans in index.html) to remove them. */
 .problem-bold {
   font-weight: 700;
+}
+
+/* ---- Closing CTA ---- */
+.home-cta-title {
+  font-size: clamp(1.75rem, 1.1rem + 2.2vw, 2.75rem);
+  line-height: 1.3;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  text-wrap: balance;
+}
+
+@media (max-width: 700px) {
+  .home-section {
+    --home-px: 24px;
+  }
+
+  .home-actions {
+    flex-direction: column;
+  }
 }

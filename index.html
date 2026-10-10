@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@1,400;1,500;1,600&display=swap">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261009">
 </head>
 <body>
 
@@ -28,28 +28,25 @@
 
   <main>
 
-    <!-- SECTION 1: THE HOOK -->
-    <section class="home-section home-section--hook" style="background: var(--color-background)">
-      <h1 class="home-hook-title load-in" style="--load-index: 0">Your intentions are good. You checked every box. So why isn't it working for people?</h1>
-      <p class="home-body load-in" style="--load-index: 1">What makes sense for your organization doesn't always work for your community. The more familiar you are with your side of things, the harder it is to see the full picture of your community's experience. And that blind spot is an organizational risk that can get expensive.</p>
-      <div class="home-actions load-in" style="--load-index: 2">
-        <a href="work-with-me.html" class="btn btn-accent">Work With Me</a>
-        <a href="services.html#alignment-review" class="btn btn-primary">Learn about the Alignment Review</a>
-      </div>
-      <div style="line-height: 0; margin: 32px calc(-1 * var(--home-px)) 0">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="display: block; width: 100%; height: 110px">
-          <path d="M0,0 C420,110 900,4 1440,72 L1440,120 L0,120 Z" fill="var(--color-background-tint)"></path>
-        </svg>
+    <!-- BAND 1: THE HOOK (aubergine) -->
+    <section class="home-section home-section--hook home-section--dark on-dark">
+      <div class="home-container">
+        <h1 class="home-hook-title load-in" style="--load-index: 0">Your intentions are good. You checked every box. So why isn't it working for people?</h1>
+        <p class="home-body load-in" style="--load-index: 1">What makes sense for your organization doesn't always work for your community. The more familiar you are with your side of things, the harder it is to see the full picture of your community's experience. And that blind spot is an organizational risk that can get expensive.</p>
+        <div class="home-actions load-in" style="--load-index: 2">
+          <a href="work-with-me.html" class="btn btn-accent">Work With Me</a>
+          <a href="services.html#alignment-review" class="btn btn-primary">Learn about the Alignment Review</a>
+        </div>
       </div>
     </section>
 
-    <!-- SECTION 2: THE PROBLEM -->
-    <section class="home-section home-section--problem" aria-labelledby="problem-label" style="background: var(--color-background-tint)">
-      <div class="problem-grid">
+    <!-- BAND 2: THE PROBLEM (parchment) -->
+    <section class="home-section home-section--problem" aria-labelledby="problem-label">
+      <div class="home-container">
         <div class="problem-lead">
           <!-- EYEBROW LABEL "The Problem" — added by Shara. It is also the section's accessible label: to remove it, delete this one line AND the aria-labelledby on the <section> above. -->
           <span id="problem-label" class="eyebrow eyebrow--mono reveal" data-reveal style="margin-bottom: 20px; display: inline-flex">The Problem</span>
-          <p class="problem-pull reveal" data-reveal>It can start with lack of engagement. More complaints. People leaving without explanation. Staff absorb the frustration. Over time, it turns into lost funding, or public scrutiny like a news story or legal challenge.</p>
+          <p class="problem-pull editorial reveal" data-reveal>It can start with lack of engagement. More complaints. People leaving without explanation. Staff absorb the frustration. Over time, it turns into lost funding, or public scrutiny like a news story or legal challenge.</p>
         </div>
         <div class="problem-body">
           <p class="home-body problem-item reveal" data-reveal>It's easy to miss, and <span class="problem-bold">a survey won't catch it</span>. Because, like everything else in the organization, it's designed from the inside out.</p>
@@ -60,37 +57,35 @@
           </div>
         </div>
       </div>
-      <div style="line-height: 0; margin: clamp(48px, 7vw, 80px) calc(-1 * var(--home-px)) calc(-1 * var(--home-pad))">
-        <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="display: block; width: 100%; height: 110px">
-          <path d="M0,44 C380,-8 980,118 1440,26 L1440,120 L0,120 Z" fill="var(--color-background)"></path>
-        </svg>
-      </div>
     </section>
 
-    <!-- SECTION 3: THIS IS WHERE I COME IN -->
-    <section class="home-section home-section--role" style="background: var(--color-background)">
-      <h2 class="home-h2 reveal" data-reveal>This is Where I Come In.</h2>
-      <div class="home-split">
-        <div class="home-block reveal" data-reveal>
-          <h3 class="home-block-title">I find the disconnect you can't see from the inside.</h3>
-          <p class="home-body">When the people you serve don't use or trust what you offer, I learn why and work with you on what to fix first.</p>
-          <a href="services.html" class="btn btn-primary">Learn More About My Services</a>
-        </div>
-        <div class="home-block reveal" data-reveal>
-          <h3 class="home-block-title">Because I see organizations from both sides.</h3>
-          <p class="home-body">I'm Shara Marie-France, a fractional organizational advisor.</p>
-          <p class="home-body">I've worked as a lawyer, a policy and governance advisor, a community advocate and in labour relations. And I've navigated institutions across seven countries myself. So I know how organizations work, how they feel to people using them, and where the gaps form.</p>
-          <a href="about.html" class="btn btn-primary">More About Me</a>
+    <!-- BAND 3: THIS IS WHERE I COME IN (tint) -->
+    <section class="home-section home-section--role">
+      <div class="home-container">
+        <h2 class="home-h2 reveal" data-reveal>This is Where I Come In.</h2>
+        <div class="home-split">
+          <div class="home-block reveal" data-reveal>
+            <h3 class="home-block-title">I find the disconnect you can't see from the inside.</h3>
+            <p class="home-body">When the people you serve don't use or trust what you offer, I learn why and work with you on what to fix first.</p>
+            <a href="services.html" class="btn btn-primary">Learn More About My Services</a>
+          </div>
+          <div class="home-block reveal" data-reveal>
+            <h3 class="home-block-title">Because I see organizations from both sides.</h3>
+            <p class="home-body home-body--center">I'm Shara Marie-France, a fractional organizational advisor.</p>
+            <p class="home-body">I've worked as a lawyer, a policy and governance advisor, a community advocate and in labour relations. And I've navigated institutions across seven countries myself. So I know how organizations work, how they feel to people using them, and where the gaps form.</p>
+            <a href="about.html" class="btn btn-primary">More About Me</a>
+          </div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <section id="contact" class="on-dark" style="background: var(--color-brand-primary); color: var(--color-background); padding: 64px 48px">
-    <div style="max-width: 1120px; margin: 0 auto; text-align: center">
-      <h2 class="editorial" style="font-size: 44px; line-height: 1.3; margin: 0 0 40px; color: var(--color-background)">Where is your organization experiencing a gap between intention and community reality?</h2>
-      <div style="display: flex; gap: 12px; align-items: center; justify-content: center">
+  <!-- BAND 4: CLOSING CTA (aubergine) -->
+  <section id="contact" class="home-section home-section--cta home-section--dark on-dark">
+    <div class="home-container">
+      <h2 class="home-cta-title editorial">Where is your organization experiencing a gap between intention and community reality?</h2>
+      <div class="home-actions" style="margin-top: 0">
         <a href="work-with-me.html" class="btn btn-accent">Work With Me</a>
       </div>
     </div>
@@ -101,6 +96,6 @@
     <div class="text-muted">Organizational Advisor</div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20261009"></script>
 </body>
 </html>
