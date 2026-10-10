@@ -149,6 +149,22 @@ b, strong {
   letter-spacing: normal;
 }
 
+/* Standard visually-hidden utility: invisible on screen but still read by
+   screen readers (e.g. the "it" behind the visible [...] in the homepage
+   headline). */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 h1.editorial, h2.editorial, h3.editorial, h4.editorial {
   font-weight: 500;
   letter-spacing: normal;
