@@ -898,6 +898,20 @@ a:hover {
 }
 
 /* ---- Type ---- */
+/* One-line positioning statement above the hook headline: a <p>, so the
+   headline stays the page's only <h1>. Ochre (brand accent) is the
+   on-dark accent color: 5.8:1 on the aubergine band. */
+.home-kicker {
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-brand-accent);
+  text-align: center;
+  text-wrap: balance;
+  max-width: 44rem;
+  margin: 0 auto 18px;
+}
+
 .home-hook-title {
   font-size: clamp(2.25rem, 5vw, 3.75rem);
   line-height: 1.1;
