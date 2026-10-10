@@ -1066,11 +1066,12 @@ a:hover {
 }
 
 /* ==========================================================================
-   Homepage frame (index.html only, <body class="home-page">).
-   At 1100px and wider the whole page (header, main, CTA, footer) sits in a
-   rounded, shadowed card over a soft abstract light backdrop. Below 1100px
-   the card is just a full-width wrapper: no margin, radius, shadow or
-   backdrop, so tablets and phones look exactly as before.
+   Page frame (shared: index, services, insights, about, work-with-me).
+   Any page with <body class="framed-page"> wraps its header, main content
+   and footer in <div class="page-frame">. At 1100px and wider that wrapper
+   becomes a rounded, shadowed card over a soft abstract light backdrop.
+   Below 1100px it is just a full-width wrapper: no margin, radius, shadow
+   or backdrop, so tablets and phones look exactly as before.
    ========================================================================== */
 
 /* THE BACKDROP LIVES HERE, in this one variable. Swap it for a photo with
@@ -1078,7 +1079,7 @@ a:hover {
    Palette colors only: the pale aubergine tint as the base, with large,
    soft radial glows (out-of-focus window light) in ochre, aubergine and a
    touch of clear blue. Static, no animation. */
-.home-page {
+.framed-page {
   --page-backdrop:
     radial-gradient(ellipse 55% 60% at 8% 6%, color-mix(in srgb, var(--color-brand-accent) 32%, transparent), transparent 72%),
     radial-gradient(ellipse 50% 55% at 92% 14%, color-mix(in srgb, var(--color-brand-primary) 24%, transparent), transparent 72%),
@@ -1093,7 +1094,7 @@ a:hover {
 }
 
 @media (min-width: 1100px) {
-  .home-page::before {
+  .framed-page::before {
     content: '';
     position: fixed;
     inset: 0;
