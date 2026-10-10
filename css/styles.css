@@ -1054,3 +1054,49 @@ a:hover {
     align-items: flex-start;
   }
 }
+
+/* ---- The Problem section (homepage) ----
+   Stacked by default: eyebrow, pull statement, paragraphs, button.
+   Two columns (~40% / ~60%) from 900px up. */
+.problem-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+}
+
+@media (min-width: 900px) {
+  .problem-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+}
+
+.problem-pull {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--color-brand-primary);
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .problem-pull {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+}
+
+.problem-item {
+  max-width: none;
+  margin: 0 0 clamp(24px, 3vw, 32px);
+  padding-top: clamp(24px, 3vw, 32px);
+  border-top: 1px solid var(--color-border-strong);
+}
+
+/* The only place the Problem section's bold phrases are defined — delete
+   this rule (or the .problem-bold spans in index.html) to remove them. */
+.problem-bold {
+  font-weight: 700;
+}

@@ -44,15 +44,21 @@
     </section>
 
     <!-- SECTION 2: THE PROBLEM -->
-    <section class="home-section home-section--problem" style="background: var(--color-background-tint)">
-      <!-- EYEBROW LABEL "The Problem" — added by Shara; delete just this one line to remove it. -->
-      <span class="eyebrow eyebrow--mono reveal" data-reveal style="margin-bottom: 20px; display: inline-flex">The Problem</span>
-      <p class="home-body home-body--lead reveal" data-reveal>It can start with lack of engagement. More complaints. People leaving without explanation. Staff absorb the frustration. Over time, it turns into lost funding, or public scrutiny like a news story or legal challenge.</p>
-      <p class="home-body reveal" data-reveal>It's easy to miss, and a survey won't catch it. Because, like everything else in the organization, it's designed from the inside out.</p>
-      <p class="home-body reveal" data-reveal>Community experience tells you how you'll do in the long term, but many organizations were taught to focus on this quarter, this budget, this reporting period.</p>
-      <p class="home-body reveal" data-reveal>What's measured is what's easy to count and report upward. And community feedback may get collected but is outweighed by the next deadline.</p>
-      <div class="home-actions reveal" data-reveal style="margin-top: 16px">
-        <a href="insights.html" class="btn btn-primary">Learn More About the Problem</a>
+    <section class="home-section home-section--problem" aria-labelledby="problem-label" style="background: var(--color-background-tint)">
+      <div class="problem-grid">
+        <div class="problem-lead">
+          <!-- EYEBROW LABEL "The Problem" — added by Shara. It is also the section's accessible label: to remove it, delete this one line AND the aria-labelledby on the <section> above. -->
+          <span id="problem-label" class="eyebrow eyebrow--mono reveal" data-reveal style="margin-bottom: 20px; display: inline-flex">The Problem</span>
+          <p class="problem-pull reveal" data-reveal>It can start with lack of engagement. More complaints. People leaving without explanation. Staff absorb the frustration. Over time, it turns into lost funding, or public scrutiny like a news story or legal challenge.</p>
+        </div>
+        <div class="problem-body">
+          <p class="home-body problem-item reveal" data-reveal>It's easy to miss, and <span class="problem-bold">a survey won't catch it</span>. Because, like everything else in the organization, it's designed from the inside out.</p>
+          <p class="home-body problem-item reveal" data-reveal>Community experience tells you how you'll do in the long term, but many organizations were taught to focus on <span class="problem-bold">this quarter, this budget, this reporting period</span>.</p>
+          <p class="home-body problem-item reveal" data-reveal>What's measured is what's <span class="problem-bold">easy to count and report upward</span>. And community feedback may get collected but is outweighed by the next deadline.</p>
+          <div class="home-actions reveal" data-reveal style="margin-top: 8px">
+            <a href="insights.html" class="btn btn-primary">Learn More About the Problem</a>
+          </div>
+        </div>
       </div>
       <div style="line-height: 0; margin: clamp(48px, 7vw, 80px) calc(-1 * var(--home-px)) calc(-1 * var(--home-pad))">
         <svg viewBox="0 0 1440 120" preserveAspectRatio="none" style="display: block; width: 100%; height: 110px">
