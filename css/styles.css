@@ -898,18 +898,40 @@ a:hover {
 }
 
 /* ---- Type ---- */
-/* One-line positioning statement above the hook headline: a <p>, so the
-   headline stays the page's only <h1>. Ochre (brand accent) is the
-   on-dark accent color: 5.8:1 on the aubergine band. */
+/* Tagline above the hook headline: a <p>, so the headline stays the page's
+   only <h1>. Ochre (brand accent) is the on-dark accent color: 5.8:1 on the
+   aubergine band. Flanked by the same short ochre dash the eyebrow uses
+   (18 x 2px), one per side, vertically centered with the text. */
 .home-kicker {
-  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
-  font-weight: 500;
-  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.3;
   color: var(--color-brand-accent);
   text-align: center;
   text-wrap: balance;
   max-width: 44rem;
-  margin: 0 auto 18px;
+  margin: 0 auto 22px;
+}
+
+.home-kicker::before,
+.home-kicker::after {
+  content: '';
+  flex: none;
+  width: 18px;
+  height: 2px;
+  background: var(--color-brand-accent);
+}
+
+/* On phones the text wraps and the dashes would crowd it. */
+@media (max-width: 480px) {
+  .home-kicker::before,
+  .home-kicker::after {
+    display: none;
+  }
 }
 
 .home-hook-title {
