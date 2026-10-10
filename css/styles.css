@@ -959,6 +959,13 @@ a:hover {
   text-wrap: balance;
 }
 
+/* The "[...]" in the headline: the same ochre as the tagline above it
+   (5.8:1 on the aubergine band). Size, weight and decoration are inherited
+   from the headline. */
+.home-hook-accent {
+  color: var(--color-brand-accent);
+}
+
 /* Body text keeps a readable measure, centered with auto margins. It stays
    left-aligned inside that column: anything longer than three lines reads
    badly centered. .home-body--center is for one-liners only. */
