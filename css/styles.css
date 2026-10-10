@@ -932,3 +932,13 @@ a:hover {
     gap: 40px;
   }
 }
+
+/* about.html: the About section is the last thing before the footer, so
+   the photo would sit flush on the footer's top line. Give it breathing
+   room at desktop widths only (mobile already ends with its own spacing
+   under the paragraph). */
+@media (min-width: 701px) {
+  .about-grid--page-end {
+    padding-bottom: clamp(48px, 6vw, 96px);
+  }
+}
