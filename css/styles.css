@@ -1939,3 +1939,27 @@ a:hover {
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   Footer with the logo between the name and the title (index, services,
+   insights, about, work-with-me). The row itself is the existing inline flex
+   with space-between, so the logo sits in the middle with an equal gap on
+   each side. The logo is decorative (alt="", not a link). Below 900px the
+   three stack, centered: name, logo, title.
+   ========================================================================== */
+.page-footer-logo {
+  display: block;
+  flex: none;
+  width: auto;
+  height: 56px;
+}
+
+@media (max-width: 899px) {
+  .page-footer {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
+    text-align: center;
+  }
+}
