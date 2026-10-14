@@ -1404,6 +1404,78 @@ a:hover {
 }
 
 /* ==========================================================================
+   Sticky site header (all pages). position: sticky works here because no
+   ancestor is a scroll container: .page-frame uses overflow: clip, which
+   (unlike hidden/auto) does not break it. The real height is measured in
+   js/main.js into --header-height; the values below are only the starting
+   point before that runs.
+   ========================================================================== */
+:root {
+  --header-height: 90px;
+  --jump-bar-height: 61px;
+}
+
+@media (max-width: 1000px) {
+  :root {
+    --header-height: 112px;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --header-height: 73px;
+  }
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-background);
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+
+/* Once the page has scrolled a little (class toggled in main.js). */
+.site-header.is-scrolled {
+  box-shadow: 0 2px 14px color-mix(in srgb, var(--color-brand-primary) 10%, transparent);
+}
+
+/* Every anchor target keeps clear of the header. (The services sections add
+   the Jump-to bar's height on top of this, further down.) */
+[id] {
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+/* Phones: a compact header. Same links, same wrapping; just tighter, so the
+   sticky bar stays about two short rows instead of three. */
+@media (max-width: 700px) {
+  .site-header {
+    padding: 8px 16px !important;
+    row-gap: 2px !important;
+  }
+
+  .site-nav {
+    gap: 0 12px !important;
+  }
+
+  .site-nav .nav-link {
+    font-size: 12px !important;
+    padding: 9px 0;
+  }
+
+  .site-header .btn {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
    services.html: Jump-to bar, interactive How I Work, Initial Review
    flagship, and the four service cards. Straight edges throughout; gold is
    decorative (bars, dashes, underline) except the text-safe #8A651F.
@@ -1510,33 +1582,23 @@ a:hover {
   text-underline-offset: 5px;
 }
 
-/* Jump targets leave room so they aren't hidden under the sticky bar. */
-.jump-target {
-  scroll-margin-top: 16px;
-}
-
 .anchor-alias {
   display: block;
   height: 0;
 }
 
+/* From 900px the bar is sticky, directly under the site header. A jumped-to
+   section has to clear BOTH, so its offset is header + bar + a little air.
+   Both heights are live CSS variables (see "Sticky site header" above). */
 @media (min-width: 900px) {
   .jump-bar {
     position: sticky;
-    top: 0;
-    z-index: 20;
+    top: var(--header-height);
+    z-index: 90;
   }
 
   .jump-target {
-    scroll-margin-top: 104px;
-  }
-}
-
-/* Between 900 and 1099px the bar can wrap to two rows (up to ~128px tall),
-   so jumped-to sections need a bigger offset to stay clear of it. */
-@media (min-width: 900px) and (max-width: 1099px) {
-  .jump-target {
-    scroll-margin-top: 152px;
+    scroll-margin-top: calc(var(--header-height) + var(--jump-bar-height) + 16px);
   }
 }
 

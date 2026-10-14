@@ -1,8 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
+  initHeader();
   initReveal();
   initStages();
   initJumpBar();
 });
+
+/* Sticky site header: publish its real height (and the services Jump-to
+   bar's) as CSS variables so everything that sits under or behind it
+   (the sticky Jump-to bar, scroll-margin-top on anchor targets) uses the
+   true value at every width, and add .is-scrolled once the page has moved
+   a little, for a thin shadow. */
+function initHeader() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  const root = document.documentElement;
+  const jumpBar = document.querySelector('.jump-bar');
+
+  const measure = () => {
+    root.style.setProperty('--header-height', header.getBoundingClientRect().height + 'px');
+    if (jumpBar) {
+      root.style.setProperty('--jump-bar-height', jumpBar.getBoundingClientRect().height + 'px');
+    }
+  };
+
+  measure();
+  if ('ResizeObserver' in window) {
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(header);
+    if (jumpBar) resizeObserver.observe(jumpBar);
+  } else {
+    window.addEventListener('resize', measure);
+  }
+
+  const onScroll = () => {
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
 
 /* Scroll-reveal: any .reveal element fades up once it crosses the
    upper-middle of the viewport. */
@@ -93,6 +129,7 @@ function initJumpBar() {
     .filter((t) => t.el);
   if (!targets.length) return;
 
+  const BAND = 90;
   const inBand = new Set();
   let preferred = null;
   let holdUntil = 0;
@@ -105,6 +142,19 @@ function initJumpBar() {
         l.removeAttribute('aria-current');
       }
     });
+  };
+
+  // The sticky header (and the sticky Jump-to bar) cover the top of the
+  // window, so the "current section" band starts just below them, wherever
+  // they end at this width.
+  const stackHeight = () => {
+    const header = document.querySelector('.site-header');
+    const bar = document.querySelector('.jump-bar');
+    let height = header ? header.getBoundingClientRect().height : 0;
+    if (bar && window.getComputedStyle(bar).position === 'sticky') {
+      height += bar.getBoundingClientRect().height;
+    }
+    return height;
   };
 
   const atBottom = () =>
@@ -126,26 +176,42 @@ function initJumpBar() {
       return;
     }
     // Above the first section (top of the page): nothing is highlighted.
-    if (targets[0].el.getBoundingClientRect().top > window.innerHeight * 0.3) {
+    if (targets[0].el.getBoundingClientRect().top > stackHeight() + BAND + 8) {
       setActive(null);
     }
   };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        inBand.add(entry.target);
-      } else {
-        inBand.delete(entry.target);
-      }
+  let observer = null;
+  const observe = () => {
+    if (observer) observer.disconnect();
+    inBand.clear();
+    const top = Math.round(stackHeight() + 8);
+    const bottom = Math.max(0, window.innerHeight - top - BAND);
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          inBand.add(entry.target);
+        } else {
+          inBand.delete(entry.target);
+        }
+      });
+      pick();
+    }, {
+      rootMargin: '-' + top + 'px 0px -' + bottom + 'px 0px',
+      threshold: 0
     });
-    pick();
-  }, {
-    rootMargin: '-20% 0px -70% 0px',
-    threshold: 0
-  });
+    targets.forEach((t) => observer.observe(t.el));
+  };
 
-  targets.forEach((t) => observer.observe(t.el));
+  observe();
+  if ('ResizeObserver' in window) {
+    const stackObserver = new ResizeObserver(observe);
+    const headerEl = document.querySelector('.site-header');
+    const barEl = document.querySelector('.jump-bar');
+    if (headerEl) stackObserver.observe(headerEl);
+    if (barEl) stackObserver.observe(barEl);
+  }
+  window.addEventListener('resize', observe);
 
   // Reaching or leaving the bottom of the page changes nothing the observer
   // can see, so check for that on scroll (throttled).
