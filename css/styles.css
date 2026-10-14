@@ -1145,6 +1145,16 @@ a:hover {
   font-weight: 700;
 }
 
+/* Bold + a thin gold underline; the text keeps the surrounding color. Used
+   on "lost funding" and "public scrutiny" in the homepage Problem lead. */
+.emph {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--color-brand-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
 /* ---- Closing CTA ---- */
 .home-cta-title {
   font-size: clamp(1.75rem, 1.1rem + 2.2vw, 2.75rem);
