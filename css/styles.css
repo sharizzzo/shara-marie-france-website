@@ -413,6 +413,10 @@ a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .reveal,
   .card,
   .btn {
@@ -563,17 +567,13 @@ a:hover {
      anywhere from mobile up through ~900px tablet widths, not just below
      700px (see there for detail). */
 
-  /* The Alignment Review callout's stacking rule now lives in its own
-     @media (max-width: 1000px) block below, since 700px wasn't wide
-     enough a cutoff for its fixed 600px left panel — see there. */
-
   /* The Gap section's 4-card grid also lacked a mobile fallback —
      stack the cards into a single column below 700px. */
   .gap-grid {
     grid-template-columns: minmax(0, 1fr) !important;
   }
 
-  /* Longer CTA labels ("Learn about the Alignment Review") were forced
+  /* Longer CTA labels ("Learn about the Initial Review") were forced
      onto one nowrap line, which no longer fits a narrow column's
      padded width. Let button text wrap here; short labels are
      unaffected since they never reach a wrap point. */
@@ -616,22 +616,7 @@ a:hover {
   }
 }
 
-/* The Alignment Review callout's left panel is a fixed 600px (by design,
-   at full desktop widths) — but that leaves the right panel too little
-   room anywhere from ~700px up to ~1000px (tablet/small-desktop), where
-   it doesn't yet get the <700px mobile stack below. Give it the same
-   stacked treatment through that whole gap instead of just <700px. */
 @media (max-width: 1000px) {
-  .review-card {
-    flex-direction: column;
-  }
-
-  .review-card-left {
-    width: auto !important;
-    border-right: none !important;
-    border-bottom: 1px solid rgba(246, 241, 232, 0.15);
-  }
-
   /* The header's logo + 5-item nav row doesn't fit on one row below
      ~1000px — without this it doesn't overflow the page (flex items
      just shrink), but "Shara Marie-France" and "About Me" wrap awkwardly
@@ -1416,4 +1401,464 @@ a:hover {
   width: 18px;
   height: 2px;
   background: var(--color-brand-accent);
+}
+
+/* ==========================================================================
+   services.html: Jump-to bar, interactive How I Work, Initial Review
+   flagship, and the four service cards. Straight edges throughout; gold is
+   decorative (bars, dashes, underline) except the text-safe #8A651F.
+   ========================================================================== */
+
+/* ---- Services intro: same pattern as the homepage Problem section ----
+   Statement on the left (bold, upright, the Problem lead's size), the two
+   paragraphs on the right, top-aligned, about 40/60 from 900px up; one
+   column (statement first) below that. Left edge matches the page title. */
+.services-intro {
+  padding: 8px 48px 48px;
+}
+
+.services-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+}
+
+.services-intro-lead {
+  margin: 0;
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.services-intro-body p {
+  max-width: 62ch;
+  margin: 0 0 20px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.services-intro-body p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .services-intro-grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: clamp(40px, 6vw, 96px);
+    align-items: start;
+  }
+}
+
+/* ---- Jump to bar ---- */
+.jump-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding: 14px 48px;
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.jump-label {
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.jump-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Lighter than the main CTAs: thin border, no fill, small text. */
+.jump-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-brand-primary);
+  text-decoration: none;
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.jump-link:hover {
+  color: var(--color-brand-primary);
+  background: var(--color-brand-primary-tint);
+  border-color: var(--color-brand-primary);
+}
+
+/* The section currently in view: gold underline. */
+.jump-link[aria-current="true"] {
+  border-color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brand-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+/* Jump targets leave room so they aren't hidden under the sticky bar. */
+.jump-target {
+  scroll-margin-top: 16px;
+}
+
+.anchor-alias {
+  display: block;
+  height: 0;
+}
+
+@media (min-width: 900px) {
+  .jump-bar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .jump-target {
+    scroll-margin-top: 104px;
+  }
+}
+
+/* Between 900 and 1099px the bar can wrap to two rows (up to ~128px tall),
+   so jumped-to sections need a bigger offset to stay clear of it. */
+@media (min-width: 900px) and (max-width: 1099px) {
+  .jump-target {
+    scroll-margin-top: 152px;
+  }
+}
+
+@media (max-width: 700px) {
+  .jump-bar {
+    padding: 12px 24px;
+  }
+}
+
+/* ---- How I Work: each stage is a button that opens a panel ---- */
+.fw-row.stage {
+  align-items: flex-start;
+  width: 100%;
+}
+
+.stage-toggle {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0 36px 0 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.stage-toggle .fw-card-title,
+.stage-toggle .fw-card-question {
+  display: block;
+}
+
+/* Plus that turns into a minus when the stage is open. */
+.stage-toggle-icon {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+}
+
+.stage-toggle-icon::before,
+.stage-toggle-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.stage-toggle-icon::after {
+  transform: rotate(90deg);
+}
+
+.stage.is-open .stage-toggle-icon::after {
+  transform: rotate(0deg);
+}
+
+.stage-toggle:hover .stage-toggle-icon {
+  color: var(--color-brand-primary);
+}
+
+.stage.is-open {
+  border-color: var(--color-border-strong);
+}
+
+/* Panel: always in the HTML. Collapses only when JavaScript is running
+   (html.js); the grid-rows trick animates height without measuring it. */
+.stage-panel {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.stage-panel-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.stage-panel-inner p {
+  margin: 0;
+  padding-top: 14px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+.js .stage-panel {
+  transition: grid-template-rows var(--duration-base) var(--ease-out),
+              opacity var(--duration-base) var(--ease-out),
+              visibility 0s;
+}
+
+.js .stage:not(.is-open) .stage-panel {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows var(--duration-base) var(--ease-out),
+              opacity var(--duration-fast) var(--ease-out),
+              visibility 0s linear var(--duration-base);
+}
+
+/* Highlight the matching part of the iceberg (set by main.js on the grid):
+   Understand = the visible tip, Diagnose = what is underneath, Change =
+   the waterline between them. */
+.iceberg-tip,
+.iceberg-mass,
+.iceberg-line,
+.iceberg-label {
+  transition: opacity var(--duration-base) var(--ease-out),
+              stroke-width var(--duration-base) var(--ease-out);
+}
+
+.how-i-work-grid[data-active="understand"] .iceberg-mass,
+.how-i-work-grid[data-active="understand"] .iceberg-label--below,
+.how-i-work-grid[data-active="diagnose"] .iceberg-tip,
+.how-i-work-grid[data-active="diagnose"] .iceberg-label--above {
+  opacity: 0.3;
+}
+
+.how-i-work-grid[data-active="change"] .iceberg-line {
+  stroke: var(--diagram-ochre);
+  stroke-width: 12;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jump-link,
+  .stage-toggle-icon::before,
+  .stage-toggle-icon::after,
+  .js .stage-panel,
+  .js .stage:not(.is-open) .stage-panel,
+  .iceberg-tip,
+  .iceberg-mass,
+  .iceberg-line,
+  .iceberg-label {
+    transition: none !important;
+  }
+}
+
+/* ---- Services: one shared block for the flagship and the four cards ----
+   .service-block is the layout and the type, used by all five. Intro column
+   (name + opener) on the left, body column (explanation, the gold-ruled
+   "You leave with" paragraph, then the button) on the right from 900px up;
+   stacked below that. Modifiers only change color:
+     --flagship  aubergine, on-dark (yellow button, "Flagship Offer" label)
+     --card      light surface, thin border, gold bar across the top
+   Straight edges throughout. */
+.service-section {
+  padding: 8px 48px clamp(48px, 6vw, 96px);
+}
+
+.service-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.service-block {
+  --sb-bg: var(--color-surface);
+  --sb-border: var(--color-border);
+  --sb-rule: var(--color-border);
+  --sb-heading: var(--color-brand-primary);
+  --sb-opener: var(--color-brand-primary);
+  --sb-body: var(--color-text);
+  --sb-strong: var(--color-text);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--sb-bg);
+  border: 1px solid var(--sb-border);
+}
+
+.service-block--flagship {
+  --sb-bg: var(--color-brand-primary);
+  --sb-border: var(--color-brand-primary);
+  --sb-rule: color-mix(in srgb, var(--color-background) 15%, transparent);
+  --sb-heading: var(--color-background);
+  --sb-opener: var(--color-background);
+  --sb-body: color-mix(in srgb, var(--color-background) 90%, transparent);
+  --sb-strong: var(--color-background);
+  color: var(--color-background);
+}
+
+.service-block-intro,
+.service-block-body {
+  padding: 40px 32px;
+}
+
+.service-block-intro {
+  border-bottom: 1px solid var(--sb-rule);
+}
+
+.service-block-label {
+  margin: 0 0 20px;
+  color: var(--color-brand-accent);
+}
+
+.service-block h2 {
+  max-width: 18ch;
+  margin: 0 0 24px;
+  font-size: 34px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--sb-heading);
+}
+
+.service-block-opener {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--sb-opener);
+}
+
+.service-block-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.service-block-body p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--sb-body);
+}
+
+/* "You leave with / You get": set apart with a gold rule on the left. */
+.service-block-body .service-block-outcome {
+  padding-left: 20px;
+  border-left: 3px solid var(--color-brand-accent);
+  font-weight: 500;
+  color: var(--sb-strong);
+}
+
+.service-block-body .btn {
+  margin-top: 4px;
+}
+
+@media (min-width: 900px) {
+  .service-block {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .service-block-intro,
+  .service-block-body {
+    padding: 48px;
+  }
+
+  .service-block-intro {
+    border-bottom: 0;
+    border-right: 1px solid var(--sb-rule);
+  }
+}
+
+@media (max-width: 700px) {
+  .service-section {
+    padding: 8px 24px 40px;
+  }
+
+  .service-block-intro,
+  .service-block-body {
+    padding: 32px 24px;
+  }
+}
+
+/* The five blocks are jump targets, so they fade in without the usual 28px
+   lift: a transform would change where the browser lands (by 28px) when you
+   jump to a block that hasn't revealed yet, because it scrolls to where the
+   block sits at that moment and the block then slides up. */
+.service-block.reveal {
+  transform: none;
+}
+
+/* Cards: gold bar across the top (over the border), no lift on hover, just
+   a stronger bar. */
+.service-block--card:hover {
+  border-color: var(--color-border-strong);
+}
+
+.service-block--card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 4px;
+  background: var(--color-brand-accent);
+  transition: height var(--duration-base) var(--ease-out);
+}
+
+.service-block--card:hover::before,
+.service-block--card:focus-within::before {
+  height: 8px;
+}
+
+/* Arriving from the Jump-to bar (or a link): the gold bar swells once and
+   settles, very subtly. With reduced motion it simply stays a bit thicker. */
+@keyframes service-bar-pulse {
+  0% { height: 4px; }
+  35% { height: 10px; }
+  100% { height: 4px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .service-block--card:target::before {
+    animation: service-bar-pulse 2.2s ease-out 0.35s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-block--card:target::before {
+    height: 8px;
+  }
+
+  .service-block--card::before {
+    transition: none !important;
+  }
 }

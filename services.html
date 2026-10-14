@@ -7,6 +7,7 @@
   <meta name="description" content="Services offered by Shara Marie-France, fractional organizational advisor.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>document.documentElement.classList.add('js');</script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700;800&family=Source+Serif+4:ital,wght@1,400;1,500;1,600&display=swap">
   <link rel="stylesheet" href="css/styles.css?v=20261009p">
 </head>
@@ -37,7 +38,31 @@
       </div>
     </section>
 
-  <section id="help" style="background: var(--color-background)">
+    <!-- Intro: statement on the left, two paragraphs on the right (900px+); one column below -->
+    <section class="services-intro" style="background: var(--color-background)">
+      <div class="services-intro-grid">
+        <p class="services-intro-lead reveal" data-reveal>Seeing what you can’t from the inside.</p>
+        <div class="services-intro-body">
+          <p class="reveal" data-reveal>I work with public and civic organizations, mission-driven organizations, and governance bodies. Organizations that serve people and want to do it better.</p>
+          <p class="reveal" data-reveal>You might be launching something new, or trying to fix something that’s been running for years. Either way, you care about the people you serve, and you want an honest outside view of how your work actually lands with them.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Jump to: sticky below 900px is off, on from 900px up -->
+    <nav class="jump-bar" aria-label="Page sections">
+      <span class="mono jump-label">Jump to</span>
+      <ul class="jump-list" role="list">
+        <li><a class="jump-link" href="#how-i-work">How I Work</a></li>
+        <li><a class="jump-link" href="#initial-review">Initial Review</a></li>
+        <li><a class="jump-link" href="#insight-assessment">Insight Assessment</a></li>
+        <li><a class="jump-link" href="#strategy">Strategy</a></li>
+        <li><a class="jump-link" href="#implementation">Implementation Support</a></li>
+        <li><a class="jump-link" href="#advisory-partnership">Advisory Partnership</a></li>
+      </ul>
+    </nav>
+
+  <section id="how-i-work" class="jump-target" style="background: var(--color-background)">
 
     <div class="reveal" data-reveal style="padding: 72px 48px 40px">
       <span class="eyebrow eyebrow--mono" style="margin-bottom: 16px; display: inline-flex">How I Work</span>
@@ -65,15 +90,17 @@
         <div class="iceberg-figure">
           <svg viewBox="0 0 240 1000" preserveAspectRatio="none" role="img" aria-labelledby="iceberg-title" style="width: 100%; height: 100%; display: block">
             <title id="iceberg-title">An iceberg: a small visible portion above the waterline, and a much larger mass hidden beneath it</title>
-            <polygon points="55,297 90,72.5 120,217.4 152,0 190,297" fill="var(--color-brand-secondary-on-dark)"></polygon>
-            <polygon points="55,297 190,297 122,950" fill="var(--color-brand-primary)"></polygon>
-            <line x1="28" y1="297" x2="212" y2="297" stroke="var(--color-brand-secondary)" stroke-width="6"></line>
+            <polygon class="iceberg-tip" points="55,297 90,72.5 120,217.4 152,0 190,297" fill="var(--color-brand-secondary-on-dark)"></polygon>
+            <polygon class="iceberg-mass" points="55,297 190,297 122,950" fill="var(--color-brand-primary)"></polygon>
+            <line class="iceberg-line" x1="28" y1="297" x2="212" y2="297" stroke="var(--color-brand-secondary)" stroke-width="6"></line>
           </svg>
         </div>
       </div>
 
       <div class="how-i-work-steps">
-        <div class="card fw-row reveal" data-reveal>
+        <!-- Each stage is a real button that opens its detail panel (one open at a time).
+             Without JavaScript every panel simply stays visible. -->
+        <div class="card fw-row stage is-open reveal" data-reveal data-stage="understand">
           <div class="fw-card-icon" style="background: var(--diagram-rose)" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="10.5" cy="10.5" r="6.5"></circle>
@@ -81,9 +108,18 @@
             </svg>
           </div>
           <div class="fw-row-body">
-            <div class="fw-card-title"><span class="fw-row-number">01</span>Understand</div>
-            <p class="fw-card-question">What is happening?</p>
-            <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.5; color: var(--color-text-muted)">I gather information, perspectives and context to understand the problem beyond its surface.</p>
+            <button type="button" class="stage-toggle" id="stage-btn-understand" aria-expanded="true" aria-controls="stage-panel-understand">
+              <span class="fw-card-title"><span class="fw-row-number">01</span>Understand</span>
+              <span class="fw-card-question">What is happening?</span>
+              <span class="stage-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <p class="stage-desc" style="margin: 8px 0 0; font-size: 15px; line-height: 1.5; color: var(--color-text-muted)">I gather information, perspectives and context to understand the problem beyond its surface.</p>
+            <div class="stage-panel" id="stage-panel-understand" role="region" aria-labelledby="stage-btn-understand">
+              <div class="stage-panel-inner">
+                <!-- EDIT: draft expansion -->
+                <p>Before I offer an opinion, I listen. I talk with the people who run your programs and the people who use them, and I read what your organization has written down about how things are supposed to work. The distance between those two accounts is usually where the real story starts.</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -94,7 +130,7 @@
           </svg>
         </div>
 
-        <div class="card fw-row reveal" data-reveal>
+        <div class="card fw-row stage reveal" data-reveal data-stage="diagnose">
           <div class="fw-card-icon" style="background: var(--diagram-blue)" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="5.5" r="2"></circle>
@@ -104,9 +140,18 @@
             </svg>
           </div>
           <div class="fw-row-body">
-            <div class="fw-card-title"><span class="fw-row-number">02</span>Diagnose</div>
-            <p class="fw-card-question">Why is it happening?</p>
-            <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.5; color: var(--color-text-muted)">I connect patterns across systems, policies, structures, decisions, communications and behavior to determine the root causes.</p>
+            <button type="button" class="stage-toggle" id="stage-btn-diagnose" aria-expanded="false" aria-controls="stage-panel-diagnose">
+              <span class="fw-card-title"><span class="fw-row-number">02</span>Diagnose</span>
+              <span class="fw-card-question">Why is it happening?</span>
+              <span class="stage-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <p class="stage-desc" style="margin: 8px 0 0; font-size: 15px; line-height: 1.5; color: var(--color-text-muted)">I connect patterns across systems, policies, structures, decisions, communications and behavior to determine the root causes.</p>
+            <div class="stage-panel" id="stage-panel-diagnose" role="region" aria-labelledby="stage-btn-diagnose">
+              <div class="stage-panel-inner">
+                <!-- EDIT: draft expansion -->
+                <p>Once I can see what's happening, I trace it back through your policies, processes and decisions to find where it starts. Most problems turn out to be built into how things work, not caused by any one person or team. Naming the root cause makes it much easier to fix without pointing fingers.</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -117,7 +162,7 @@
           </svg>
         </div>
 
-        <div class="card fw-row reveal" data-reveal>
+        <div class="card fw-row stage reveal" data-reveal data-stage="change">
           <div class="fw-card-icon" style="background: var(--diagram-ochre)" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="8.5"></circle>
@@ -125,28 +170,97 @@
             </svg>
           </div>
           <div class="fw-row-body">
-            <div class="fw-card-title"><span class="fw-row-number">03</span>Change</div>
-            <p class="fw-card-question">What needs to be different?</p>
-            <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.5; color: var(--color-text-muted)">I translate the diagnosis into changes to systems, policies, governance, communications, processes or practices.</p>
+            <button type="button" class="stage-toggle" id="stage-btn-change" aria-expanded="false" aria-controls="stage-panel-change">
+              <span class="fw-card-title"><span class="fw-row-number">03</span>Change</span>
+              <span class="fw-card-question">What needs to be different?</span>
+              <span class="stage-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <p class="stage-desc" style="margin: 8px 0 0; font-size: 15px; line-height: 1.5; color: var(--color-text-muted)">I translate the diagnosis into changes to systems, policies, governance, communications, processes or practices.</p>
+            <div class="stage-panel" id="stage-panel-change" role="region" aria-labelledby="stage-btn-change">
+              <div class="stage-panel-inner">
+                <!-- EDIT: draft expansion -->
+                <p>Then we get practical. I help you decide what to change first, and I put it in terms your team can act on with the time and budget you really have. The goal is change that holds after I've gone, built into how your organization runs day to day.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="background: var(--color-background)">
-    <div style="padding: 8px 48px 48px">
-      <div id="alignment-review" class="reveal on-dark review-card" data-reveal style="background: var(--color-brand-primary); color: var(--color-background); display: flex">
-        <div class="review-card-left" style="padding: 48px; border-right: 1px solid rgba(246,241,232,0.15); width: 600px">
-          <div style="display: flex; align-items: center; gap: 12px; margin: 0 0 20px">
-            <span style="width: 24px; height: 3px; background: var(--color-brand-accent)"></span>
-            <span style="color: var(--color-brand-accent); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase">Flagship Offer</span>
-          </div>
-          <h2 style="font-size: 34px; line-height: 1.15; letter-spacing: -0.01em; max-width: 18ch; color: var(--color-background)">Organizational&ndash;Community Alignment Review</h2>
-        </div><div style="padding: 48px; display: flex; flex-direction: column; align-items: flex-start; gap: 32px">
-          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: color-mix(in srgb, var(--color-background) 85%, transparent)">A comprehensive assessment of how organizational policies, governance, services, and engagement practices align with community experience. The review identifies barriers, opportunities, and practical recommendations to strengthen decisionmaking, accessibility, accountability, and public trust.</p><a href="work-with-me.html" class="btn btn-accent">Ask About the Alignment Review</a>
+  <!-- SERVICES: the flagship Initial Review, then the four other services, stacked.
+       All five share one layout (.service-block); only colors, the "Flagship Offer" label
+       and the button style differ. The empty span keeps old #alignment-review links working. -->
+  <section class="service-section" style="background: var(--color-background)">
+    <span id="alignment-review" class="anchor-alias jump-target"></span>
+    <div class="service-stack reveal-group">
+
+      <article id="initial-review" class="service-block service-block--flagship jump-target reveal on-dark" data-reveal>
+        <div class="service-block-intro">
+          <p class="eyebrow eyebrow--mono service-block-label">Flagship Offer</p>
+          <h2>Initial Review</h2>
+          <p class="service-block-opener">When the people you serve aren’t using what you offer, and you can’t figure out why.</p>
         </div>
-      </div>
+        <div class="service-block-body">
+          <p>Sign-ups are low. The drop-in sessions are half empty. Community trust is slipping. You’ve tried the obvious fixes and nothing’s working.</p>
+          <p>That’s the type of problem this review focuses on. I look at your policies, practices and engagement methods. Then I compare them to how communities actually experience them. Usually, the barrier is smaller and more fixable than it looks from the inside.</p>
+          <p class="service-block-outcome">You leave with a clear diagnosis of why it’s happening, a practical plan for what to fix first, and a richer picture of the people you serve.</p>
+          <a href="work-with-me.html" class="btn btn-accent">Ask About the Initial Review</a>
+        </div>
+      </article>
+
+      <article id="insight-assessment" class="service-block service-block--card jump-target reveal" data-reveal style="--reveal-index: 0">
+        <div class="service-block-intro">
+          <h2 id="svc-title-insight">Community Insight &amp; Organizational Assessment</h2>
+          <p class="service-block-opener">When you sense something isn’t working but aren’t sure where.</p>
+        </div>
+        <div class="service-block-body">
+          <p>Maybe it’s a feeling in staff meetings. Maybe it’s complaints that don’t add up to a clear pattern. This assessment finds the barriers, gaps, and struggles the people you serve are facing and why they are happening.</p>
+          <p>I review your policies, services, governance and communications in detail. Then I design and lead engagement with your community and stakeholders to hear about their experience from them directly.</p>
+          <p class="service-block-outcome">You leave with clear priorities for improving decision-making, accessibility, accountability, and community trust.</p>
+          <a class="btn btn-secondary" href="work-with-me.html" aria-describedby="svc-title-insight">Ask about this</a>
+        </div>
+      </article>
+
+      <article id="strategy" class="service-block service-block--card jump-target reveal" data-reveal style="--reveal-index: 1">
+        <div class="service-block-intro">
+          <h2 id="svc-title-strategy">Community-Informed Strategy</h2>
+          <p class="service-block-opener">Insight only matters if it changes decisions.</p>
+        </div>
+        <div class="service-block-body">
+          <p>You know what your community needs. Now you need a plan to deliver it, even as budgets and priorities shift.</p>
+          <p>I work with leadership and boards to develop strategies grounded in community experience and aligned with your organization’s capacity.</p>
+          <p class="service-block-outcome">You leave with an actionable strategy, and decisions that answer to your community as well as your organization.</p>
+          <a class="btn btn-secondary" href="work-with-me.html" aria-describedby="svc-title-strategy">Ask about this</a>
+        </div>
+      </article>
+
+      <article id="implementation" class="service-block service-block--card jump-target reveal" data-reveal style="--reveal-index: 2">
+        <div class="service-block-intro">
+          <h2 id="svc-title-implementation">Implementation Support</h2>
+          <p class="service-block-opener">Good plans often stall in day-to-day operations.</p>
+        </div>
+        <div class="service-block-body">
+          <p>The strategy’s approved, yet nothing is changing. I work alongside your team to build the new approach into policy, practice, and governance, so it doesn’t depend on one champion or one good quarter.</p>
+          <p>I create a practical implementation plan, facilitate collaboration with stakeholders and across departments, and help leadership and staff build their capacity to sustain the change.</p>
+          <p class="service-block-outcome">You leave with lasting changes that strengthen accountability and trust between your organization and your community.</p>
+          <a class="btn btn-secondary" href="work-with-me.html" aria-describedby="svc-title-implementation">Ask about this</a>
+        </div>
+      </article>
+
+      <article id="advisory-partnership" class="service-block service-block--card jump-target reveal" data-reveal style="--reveal-index: 3">
+        <div class="service-block-intro">
+          <h2 id="svc-title-advisory">Strategic Advisory Partnership</h2>
+          <p class="service-block-opener">Most decisions happen between projects.</p>
+        </div>
+        <div class="service-block-body">
+          <p>Whether you’re building something new or running something established, decisions come fast, and there’s rarely time to bring in an outside review.</p>
+          <p>I work with organizations on an ongoing, part-time basis, as a sounding board on policies, engagement, or day-to-day issues as they come up.</p>
+          <p class="service-block-outcome">You get a steady outside perspective, and community realities built into how your organization operates.</p>
+          <a class="btn btn-secondary" href="work-with-me.html" aria-describedby="svc-title-advisory">Ask about this</a>
+        </div>
+      </article>
+
     </div>
   </section>
   </main>
